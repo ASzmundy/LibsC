@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/alexi/CLionProjects/Listes_chaines/library.c
+library.h
+C:/Users/alexi/CLionProjects/Listes_chaines/library.h
+stdio.h
+-
+
+C:/Users/alexi/CLionProjects/Listes_chaines/library.h
+
