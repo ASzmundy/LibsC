@@ -18,10 +18,10 @@
 				</MakeCommands>
 			</Target>
 			<Target title="Arbres">
-				<Option output="C:/Users/alexi/CLionProjects/Arbres/cmake-build-debug/libArbres.dll" prefix_auto="0" extension_auto="0"/>
+				<Option output="C:/Users/alexi/CLionProjects/Arbres/cmake-build-debug/libArbres.a" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="C:/Users/alexi/CLionProjects/Arbres/cmake-build-debug"/>
 				<Option object_output="./"/>
-				<Option type="3"/>
+				<Option type="2"/>
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="C:/Program Files (x86)/mingw-w64/i686-8.1.0-posix-dwarf-rt_v6-rev0/mingw32/bin/../lib/gcc/i686-w64-mingw32/8.1.0/include"/>
@@ -36,10 +36,10 @@
 				</MakeCommands>
 			</Target>
 			<Target title="Arbres/fast">
-				<Option output="C:/Users/alexi/CLionProjects/Arbres/cmake-build-debug/libArbres.dll" prefix_auto="0" extension_auto="0"/>
+				<Option output="C:/Users/alexi/CLionProjects/Arbres/cmake-build-debug/libArbres.a" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="C:/Users/alexi/CLionProjects/Arbres/cmake-build-debug"/>
 				<Option object_output="./"/>
-				<Option type="3"/>
+				<Option type="2"/>
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="C:/Program Files (x86)/mingw-w64/i686-8.1.0-posix-dwarf-rt_v6-rev0/mingw32/bin/../lib/gcc/i686-w64-mingw32/8.1.0/include"/>

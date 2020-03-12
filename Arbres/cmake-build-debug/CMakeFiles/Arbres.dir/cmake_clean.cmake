@@ -1,8 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/Arbres.dir/library.c.obj"
-  "libArbres.dll"
-  "libArbres.dll.a"
-  "libArbres.dll.manifest"
+  "libArbres.a"
   "libArbres.pdb"
 )
 

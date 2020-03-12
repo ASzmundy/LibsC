@@ -40,39 +40,21 @@ void afficherADecroissant(ABR a){
 }
 
 void afficherForme(ABR a,int niveau) {
-    int i;
-    if (a) {
-        if (a->fd) {
-            afficherForme(a->fd, niveau++);
-        }
-        for (i = 0; i < niveau * 2; i++) {
-            printf("%c",'-');
-        }
-        printf("%d\n",a->val);
-        if(a->fg){
-            afficherForme(a->fg,niveau+1);
-        }
+    if(a) {
+        afficherForme(a->fd, niveau + 1);
+        for (int i = 1; i <= niveau; i++)
+            printf("--");
+        printf("%d\n", a->val);
+        afficherForme(a->fg, niveau + 1);
     }
 }
 
 int rechercheN(ABR a,int n){
     if(a){
-        if(a->val==n){
+        if(a->val==n)
             return 1;
-        }
-        if(a->fd&&a->fg) {
-            if (rechercheN(a->fd, n) == 0) {
-                return rechercheN(a->fg, n);
-            } else {
-                return rechercheN(a->fd, n);
-            }
-        }else{
-            if(a->fd){
-                return rechercheN(a->fd,n);
-            }else{
-                return rechercheN(a->fg,n);
-            }
-        }
+        else if (n<a->val) return rechercheN(a->fg,n);
+        else return rechercheN(a->fd,n);
     }
     return 0;
 }
@@ -84,31 +66,25 @@ int valeurMax(ABR a){
         }else{
             return a->val;
         }
-    }else return 0;
+    }else return -1;
 }
 
 void sommeEtNombres(int *somme, int *nombre, ABR a){
     if (a){
         *somme += a->val;
         *nombre = *nombre + 1;
-        if(a->fd){
             sommeEtNombres(somme,nombre,a->fd);
-        }
-        if(a->fg){
             sommeEtNombres(somme,nombre,a->fd);
-        }
     }
 }
 
-int hauteurArbre(ABR a,int etage){
+int hauteurArbre(ABR a){
+    int h=-1;
     if(a){
-        etage++;
-        if(a->fd||a->fg) {
-            if (hauteurArbre(a->fd, etage) > hauteurArbre(a->fg, etage)) {
-                return hauteurArbre(a->fd, etage);
-            } else return hauteurArbre(a->fg, etage);
-        }
-    }return etage;
+        if(!(a->fd)&&!(a->fg)) {
+            h=0;
+        } else h=1+max(hauteurArbre(a->fg), hauteurArbre(a->fd));
+    }return h;
 }
 
 ABR valMinArbre(ABR a){

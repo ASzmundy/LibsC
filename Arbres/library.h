@@ -19,7 +19,7 @@ void afficherForme(ABR a,int niveau);
 int rechercheN(ABR a,int n);
 int valeurMax(ABR a);
 void sommeEtNombres(int *somme, int *nombre, ABR a);
-int hauteurArbre(ABR a,int etage);
+int hauteurArbre(ABR a);
 ABR valMinArbre(ABR a);
 ABR supprimerNoeud(ABR racine, int n);
 
