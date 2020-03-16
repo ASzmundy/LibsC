@@ -1,6 +1,9 @@
 #include "library.h"
 #include <stdlib.h>
 #include <stdio.h>
+
+//ABR
+
 ABR creeNoeud(int n){
     ABR nouveau= (ABR)malloc(sizeof(NOEUD));
     if(nouveau){
@@ -39,14 +42,18 @@ void afficherADecroissant(ABR a){
     }
 }
 
-void afficherFormeABR(ABR a,int niveau) {
+void _afficherFormeABR(ABR a,int niveau) {
     if(a) {
-        afficherFormeABR(a->fd, niveau + 1);
+        _afficherFormeABR(a->fd, niveau + 1);
         for (int i = 1; i <= niveau; i++)
             printf("--");
         printf("%d\n", a->val);
-        afficherFormeABR(a->fg, niveau + 1);
+        _afficherFormeABR(a->fg, niveau + 1);
     }
+}
+
+void afficherFormeABR(ABR a){
+    _afficherFormeABR(a,0);
 }
 
 int rechercheN(ABR a,int n){
@@ -123,6 +130,8 @@ ABR supprimerNoeud(ABR racine, int n){
     return racine;
 }
 
+//AVL
+
 int max(int a, int b){
     return (a>b)? a:b;
 }
@@ -190,7 +199,7 @@ AVL reequilibrerDG(AVL a){
     return rotationGauche(a);
 }
 
-AVL reequilibrerAVL(AVL a,int n){
+AVL reequilibrerAVLIns(AVL a,int n){
     int equilibre = getEquilibre(a);
     if(equilibre>1 && n < a->fg->val){
         return reequilibrerGG(a);
@@ -214,16 +223,69 @@ AVL insererValeurAVL(AVL a, int n){
     else return a;
 
     a->hauteur = 1+max(hauteurAVL(a->fg),hauteurAVL(a->fd));
-    a=reequilibrerAVL(a,n);
+    a=reequilibrerAVLIns(a,n);
     return a;
 }
 
-void afficherFormeAVL(AVL a,int niveau){
+AVL noeudValMin(AVL a){
+    AVL actuel=a;
+    while(actuel->fg){
+        actuel=actuel->fg;
+    }
+    return actuel;
+}
+
+AVL reequilibrerAVLSup(AVL racine){
+    int equilibre = getEquilibre(racine);
+    if(equilibre > 1 && getEquilibre(racine->fg) >= 0) return rotationDroite(racine);
+    if(equilibre > 1 && getEquilibre(racine->fg) < 0){
+        racine->fg = rotationGauche(racine->fg);
+        return rotationDroite(racine);
+    }
+    if(equilibre < -1 && getEquilibre(racine->fd) <= 0) return rotationGauche(racine);
+    if(equilibre < -1 && getEquilibre(racine->fd) > 0){
+        racine->fd = rotationDroite(racine->fd);
+        return rotationGauche(racine);
+    }
+    return racine;
+}
+
+AVL supprimerValeurAVL(AVL racine,int n){
+    if(racine==NULL) return racine;
+
+    if(n < racine->val) racine->fg=supprimerValeurAVL(racine->fg,n);
+
+    else if (n > racine->val) racine->fd = supprimerValeurAVL(racine->fd,n);
+
+    else{
+        if( (racine->fg==NULL) || (racine->fd==NULL) ){
+            AVL temp=racine->fg ? racine->fg : racine->fd;
+            if(temp==NULL){
+                temp=racine;
+                racine=NULL;
+            }else *racine=*temp;
+            free(temp);
+        }else{
+             AVL temp = noeudValMin(racine->fd);
+             racine->val=temp->val;
+             racine->fd=supprimerValeurAVL(racine->fd,temp->val);
+        }
+    }
+    if(racine==NULL) return racine;
+    racine->hauteur = 1+max(hauteurAVL(racine->fg),hauteurAVL(racine->fd));
+    return reequilibrerAVLSup(racine);
+}
+
+void _afficherFormeAVL(AVL a,int niveau){
     if(a) {
-        afficherFormeAVL(a->fd, niveau + 1);
+        _afficherFormeAVL(a->fd, niveau + 1);
         for (int i = 1; i <= niveau; i++)
             printf("--");
         printf("%d\n", a->val);
-        afficherFormeAVL(a->fg, niveau + 1);
+        _afficherFormeAVL(a->fg, niveau + 1);
     }
+}
+
+void afficherFormeAVL(AVL a){
+    _afficherFormeAVL(a,0);
 }
