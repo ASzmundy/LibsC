@@ -39,13 +39,13 @@ void afficherADecroissant(ABR a){
     }
 }
 
-void afficherForme(ABR a,int niveau) {
+void afficherFormeABR(ABR a,int niveau) {
     if(a) {
-        afficherForme(a->fd, niveau + 1);
+        afficherFormeABR(a->fd, niveau + 1);
         for (int i = 1; i <= niveau; i++)
             printf("--");
         printf("%d\n", a->val);
-        afficherForme(a->fg, niveau + 1);
+        afficherFormeABR(a->fg, niveau + 1);
     }
 }
 
@@ -59,10 +59,10 @@ int rechercheN(ABR a,int n){
     return 0;
 }
 
-int valeurMax(ABR a){
+int valeurMaxABR(ABR a){
     if(a){
         if(a->fd) {
-            return valeurMax(a->fd);
+            return valeurMaxABR(a->fd);
         }else{
             return a->val;
         }
@@ -78,21 +78,23 @@ void sommeEtNombres(int *somme, int *nombre, ABR a){
     }
 }
 
-int hauteurArbre(ABR a){
+int hauteurABR(ABR a){
     int h=-1;
     if(a){
         if(!(a->fd)&&!(a->fg)) {
             h=0;
-        } else h=1+max(hauteurArbre(a->fg), hauteurArbre(a->fd));
+        } else h=1+max(hauteurABR(a->fg), hauteurABR(a->fd));
     }return h;
 }
 
-ABR valMinArbre(ABR a){
-    ABR actuel = a;
-    while(actuel&&actuel->fg){
-        actuel=actuel->fg;
-    }
-    return actuel;
+int valMinABR(ABR a){
+    if(a) {
+        ABR actuel = a;
+        while (actuel && actuel->fg) {
+            actuel = actuel->fg;
+        }
+        return actuel->val;
+    } return 0;
 }
 
 ABR supprimerNoeud(ABR racine, int n){
@@ -114,9 +116,9 @@ ABR supprimerNoeud(ABR racine, int n){
             free(racine);
             return temp;
         }
-        ABR temp = valMinArbre(racine->fd);
-        racine->val=temp->val;
-        racine->fd=supprimerNoeud(racine->fd,temp->val);
+        int temp = valMinABR(racine->fd);
+        racine->val=temp;
+        racine->fd=supprimerNoeud(racine->fd,temp);
     }
     return racine;
 }
@@ -125,7 +127,7 @@ int max(int a, int b){
     return (a>b)? a:b;
 }
 
-int hauteur(AVL a){
+int hauteurAVL(AVL a){
     if(a==NULL) return 0;
     return a->hauteur;
 }
@@ -146,8 +148,8 @@ AVL rotationDroite(AVL a){
     b->fd=a;
     a->fg=c;
 
-    a->hauteur=max(hauteur(a->fg),hauteur(a->fd))+1;
-    b->hauteur=max(hauteur(b->fg),hauteur(b->fd))+1;
+    a->hauteur=max(hauteurAVL(a->fg),hauteurAVL(a->fd))+1;
+    b->hauteur=max(hauteurAVL(b->fg),hauteurAVL(b->fd))+1;
 
     return b;
 }
@@ -159,15 +161,15 @@ AVL rotationGauche(AVL b){
     a->fg=b;
     b->fd=c;
 
-    b->hauteur=max(hauteur(b->fg),hauteur(b->fd))+1;
-    a->hauteur=max(hauteur(a->fg),hauteur(a->fd))+1;
+    b->hauteur=max(hauteurAVL(b->fg),hauteurAVL(b->fd))+1;
+    a->hauteur=max(hauteurAVL(a->fg),hauteurAVL(a->fd))+1;
 
     return a;
 }
 
 int getEquilibre(AVL a){
     if(a==NULL) return 0;
-    return hauteur(a->fg)-hauteur(a->fd);
+    return hauteurAVL(a->fg)-hauteurAVL(a->fd);
 }
 
 AVL reequilibrerDD(AVL a){
@@ -207,13 +209,21 @@ AVL reequilibrerAVL(AVL a,int n){
 
 AVL insererValeurAVL(AVL a, int n){
     if(a==NULL) return(creerAVL(n));
-
     if(n<a->val) a->fg = insererValeurAVL(a->fg,n);
     else if (n>a->val) a->fd = insererValeurAVL(a->fd,n);
     else return a;
 
-    a->hauteur = 1+max(hauteur(a->fg),hauteur(a->fd));
-    reequilibrerAVL(a,n);
+    a->hauteur = 1+max(hauteurAVL(a->fg),hauteurAVL(a->fd));
+    a=reequilibrerAVL(a,n);
     return a;
 }
 
+void afficherFormeAVL(AVL a,int niveau){
+    if(a) {
+        afficherFormeAVL(a->fd, niveau + 1);
+        for (int i = 1; i <= niveau; i++)
+            printf("--");
+        printf("%d\n", a->val);
+        afficherFormeAVL(a->fg, niveau + 1);
+    }
+}
