@@ -15,16 +15,17 @@ typedef struct _noeud2{
 ABR insererABR(int n,ABR a);
 void afficherACroissant(ABR a);
 void afficherADecroissant(ABR a);
-void afficherForme(ABR a,int niveau);
+void _afficherFormeABR(ABR a,int niveau);
+void afficherFormeABR(ABR a);
 int rechercheN(ABR a,int n);
-int valeurMax(ABR a);
+int valeurMaxABR(ABR a);
 void sommeEtNombres(int *somme, int *nombre, ABR a);
-int hauteurArbre(ABR a);
-ABR valMinArbre(ABR a);
+int hauteurABR(ABR a);
+int valMinABR(ABR a);
 ABR supprimerNoeud(ABR racine, int n);
 
 int max(int a, int b);
-int hauteur(AVL a);
+int hauteurAVL(AVL a);
 AVL creerAVL(int n);
 AVL rotationDroite(AVL a);
 AVL rotationGauche(AVL b);
@@ -33,6 +34,11 @@ AVL reequilibrerDD(AVL a);
 AVL reequilibrerDG(AVL a);
 AVL reequilibrerGD(AVL a);
 AVL reequilibrerGG(AVL a);
-AVL reequilibrerAVL(AVL a,int n);
+AVL reequilibrerAVLIns(AVL a,int n);
 AVL insererValeurAVL(AVL a, int n);
+AVL noeudValMin(AVL a);
+AVL reequilibrerAVLSup(AVL a);
+AVL supprimerValeurAVL(AVL racine,int n);
+void _afficherFormeAVL(AVL a, int niveau);
+void afficherFormeAVL(AVL a);
 #endif //ARBRES_LIBRARY_H
